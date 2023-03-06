@@ -1,6 +1,6 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -245,9 +245,9 @@ export function editOption(
     return questions.map((q) => {
         // this is really ugly and should just have if statements
         const newOptions: string[] =
-            targetOptionIndex > 0 ? [...q.options] : [...q.options, newOption];
+            targetOptionIndex >= 0 ? [...q.options] : [...q.options, newOption];
         newOptions[targetOptionIndex] =
-            targetOptionIndex > 0 ? newOption : newOptions[targetOptionIndex];
+            targetOptionIndex >= 0 ? newOption : newOptions[targetOptionIndex];
         const newQuestion: Question = {
             id: q.id,
             name: q.name,
@@ -273,5 +273,10 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number
 ): Question[] {
-    return [];
+    const index = questions.findIndex((q) => q.id == targetId);
+    const newQuestion: Question = duplicateQuestion(targetId, questions[index]);
+    newQuestion.id = newId;
+    const newArr: Question[] = [...questions];
+    newArr.splice(index + 1, 0, newQuestion);
+    return newArr;
 }

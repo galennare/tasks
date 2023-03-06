@@ -1,5 +1,6 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
+import { makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -117,7 +118,14 @@ export function toCSV(questions: Question[]): string {
  * making the `text` an empty string, and using false for both `submitted` and `correct`.
  */
 export function makeAnswers(questions: Question[]): Answer[] {
-    return [];
+    return questions.map((q) => {
+        return {
+            questionId: q.id,
+            text: "",
+            submitted: false,
+            correct: false
+        };
+    });
 }
 
 /***
@@ -125,7 +133,18 @@ export function makeAnswers(questions: Question[]): Answer[] {
  * each question is now published, regardless of its previous published status.
  */
 export function publishAll(questions: Question[]): Question[] {
-    return [];
+    return questions.map((q) => {
+        return {
+            id: q.id,
+            name: q.name,
+            type: q.type,
+            body: q.body,
+            expected: q.expected,
+            options: [...q.options],
+            points: q.points,
+            published: true
+        };
+    });
 }
 
 /***
@@ -133,7 +152,10 @@ export function publishAll(questions: Question[]): Question[] {
  * are the same type. They can be any type, as long as they are all the SAME type.
  */
 export function sameType(questions: Question[]): boolean {
-    return false;
+    return (
+        questions.filter((q) => q.type == questions[0].type).length ==
+        questions.length
+    );
 }
 
 /***
@@ -147,7 +169,7 @@ export function addNewQuestion(
     name: string,
     type: QuestionType
 ): Question[] {
-    return [];
+    return [...questions, makeBlankQuestion(id, name, type)];
 }
 
 /***
@@ -160,7 +182,19 @@ export function renameQuestionById(
     targetId: number,
     newName: string
 ): Question[] {
-    return [];
+    return questions.map((q) => {
+        const newQuestion: Question = {
+            id: q.id,
+            name: newName,
+            type: q.type,
+            body: q.body,
+            expected: q.expected,
+            options: [...q.options],
+            points: q.points,
+            published: q.published
+        };
+        return q.id == targetId ? newQuestion : q;
+    });
 }
 
 /***
@@ -175,7 +209,21 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType
 ): Question[] {
-    return [];
+    return questions.map((q) => {
+        const newOptions: string[] =
+            newQuestionType != "multiple_choice_question" ? [] : [...q.options];
+        const newQuestion: Question = {
+            id: q.id,
+            name: q.name,
+            type: newQuestionType,
+            body: q.body,
+            expected: q.expected,
+            options: newOptions,
+            points: q.points,
+            published: q.published
+        };
+        return q.id == targetId ? newQuestion : q;
+    });
 }
 
 /**
@@ -194,7 +242,24 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string
 ): Question[] {
-    return [];
+    return questions.map((q) => {
+        // this is really ugly and should just have if statements
+        const newOptions: string[] =
+            targetOptionIndex > 0 ? [...q.options] : [...q.options, newOption];
+        newOptions[targetOptionIndex] =
+            targetOptionIndex > 0 ? newOption : newOptions[targetOptionIndex];
+        const newQuestion: Question = {
+            id: q.id,
+            name: q.name,
+            type: q.type,
+            body: q.body,
+            expected: q.expected,
+            options: newOptions,
+            points: q.points,
+            published: q.published
+        };
+        return q.id == targetId ? newQuestion : q;
+    });
 }
 
 /***

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import "./App.css";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { ChangeType } from "./components/ChangeType";

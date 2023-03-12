@@ -21,6 +21,11 @@ export function d6(): number {
     return 1 + Math.floor(Math.random() * 6);
 }
 
+function result(dieA: number, dieB: number): string {
+    const loseWin = dieA == 1 ? "Lose" : "Win";
+    return dieA == dieB ? loseWin : "";
+}
+
 export function TwoDice(): JSX.Element {
     const [dieA, setDieA] = useState<number>(1);
     const [dieB, setDieB] = useState<number>(6);
@@ -33,7 +38,7 @@ export function TwoDice(): JSX.Element {
             <span data-testid={"right-die"}>
                 {dieB + " " + dieValues[dieB]}
             </span>
-            <span>{dieA == dieB ? (dieA == 1 ? "Lose" : "Win") : ""}</span>
+            <span>{result(dieA, dieB)}</span>
         </div>
     );
 }

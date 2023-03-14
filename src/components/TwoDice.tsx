@@ -34,9 +34,11 @@ export function TwoDice(): JSX.Element {
             Two Dice
             <Button onClick={() => setDieA(d6())}>Roll Left</Button>
             <Button onClick={() => setDieB(d6())}>Roll Right</Button>
-            <span data-testid={"left-die"}>{dieA + " " + dieValues[dieA]}</span>
+            <span data-testid={"left-die"}>
+                {dieA + " " + dieValues[dieA - 1]}
+            </span>
             <span data-testid={"right-die"}>
-                {dieB + " " + dieValues[dieB]}
+                {dieB + " " + dieValues[dieB - 1]}
             </span>
             <span>{result(dieA, dieB)}</span>
         </div>

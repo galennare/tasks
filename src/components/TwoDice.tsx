@@ -9,12 +9,12 @@ import { Button } from "react-bootstrap";
  */
 
 const dieValues: string[] = [
-    "&#9856;",
-    "&#9857;",
-    "&#9858;",
-    "&#9859;",
-    "&#9860;",
-    "&#9861;"
+    "\u2680",
+    "\u2681",
+    "\u2682",
+    "\u2683",
+    "\u2684",
+    "\u2685"
 ];
 
 export function d6(): number {

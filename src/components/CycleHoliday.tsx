@@ -21,11 +21,11 @@ export function CycleHoliday(): JSX.Element {
     ];
 
     const holiday_strs: Record<Holiday, string> = {
-        st_patricks_day: "St. Patrick's Day &#127808;",
-        cinco_de_mayo: "Cinco de Mayo &#129702;",
-        juneteenth: "Juneteenth &#128330;&#65039;",
-        independence_day: "Independence Day &#127878;",
-        christmas: "Christmas &#127876;"
+        st_patricks_day: "St. Patrick's Day \uD83C\uDF40",
+        cinco_de_mayo: "Cinco de Mayo \uD83E\uDEA6",
+        juneteenth: "Juneteenth \uD83D\uDD4A\uFE0F",
+        independence_day: "Independence Day \uD83C\uDF86",
+        christmas: "Christmas \uD83C\uDF84"
     };
 
     const next_alphabetical: Record<Holiday, Holiday> = {
